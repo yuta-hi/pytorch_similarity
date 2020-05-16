@@ -70,7 +70,8 @@ def normalized_cross_correlation(x, y, return_map, reduction='mean', eps=1e-8):
     dev_xx_sum = torch.sum(dev_xx, dim=1, keepdim=True)
     dev_yy_sum = torch.sum(dev_yy, dim=1, keepdim=True)
 
-    ncc = torch.div(dev_xy, torch.sqrt( torch.mul(dev_xx_sum, dev_yy_sum)) + eps)
+    ncc = torch.div(dev_xy + eps / dev_xy.shape[1],
+                    torch.sqrt( torch.mul(dev_xx_sum, dev_yy_sum)) + eps)
     ncc_map = ncc.view(b, *shape[1:])
 
     # reduce

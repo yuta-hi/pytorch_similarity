@@ -45,6 +45,15 @@ def test_gradient_correlation_2d(image_a, image_b, out):
     plt.savefig('test_gradient_correlation_2d_%s.png' % out)
     plt.close()
 
+
+def test_zero_inputs():
+    import torch
+    model = GradientCorrelation2d(return_map=True)
+    x = torch.zeros((1, 1, 128, 128))
+    gc, gc_m = model(x, torch.zeros_like(x))
+    print(gc.item())
+
+
 if __name__ == '__main__':
 
     import cv2
@@ -52,3 +61,5 @@ if __name__ == '__main__':
 
     test_gradient_correlation_2d(image[:,100:,0], image[:,100:,0], 'match')
     test_gradient_correlation_2d(image[:,:-100,0], image[:,100:,0], 'unmatch')
+
+    test_zero_inputs()
